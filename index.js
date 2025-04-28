@@ -2,7 +2,7 @@
 // where your node app starts
 
 // init project
-require('dotenv').config();
+require('dotenv').config({ path: `${__dirname}/sample.env` });
 var express = require('express');
 var app = express();
 
@@ -24,6 +24,18 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+app.get('/api/whoami', (req, res) => {
+
+  const dataNav = {
+    
+      ipaddress: req.ip,
+      language: req.headers['accept-language'],
+      software: req.headers['user-agent'],
+  
+  }
+
+  res.json(dataNav);
+});
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
